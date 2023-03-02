@@ -1,6 +1,6 @@
 Jenkins install is from here -  https://betterprogramming.pub/provisioning-a-jenkins-server-on-aws-using-terraform-4cd1351b5d5f
 
-For running the tf, an IAM user is required. For such user (I am using admin but in can be scoper significantly), add Access key via the console and export it to enc variable (export AWS_ACCESS_KEY=... and export AWS_SECRET_KEY= ...)
+For running the tf, an IAM user is required. For such user (I am using admin but in can be scoped significantly), add Access key via the console and export it to enc variable (export AWS_ACCESS_KEY=... and export AWS_SECRET_KEY= ...)
 
 Before running the code, change the ip addrss in secrets.tfvars and generate ssh keys as explained:
 
