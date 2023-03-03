@@ -10,4 +10,4 @@ This repo contains the material for the **How to Automate Application Security -
 
 ## Agenda
 
-### 0. Install Jenkins
+### [0. Install Jenkins](./00-install-jenkins/)
