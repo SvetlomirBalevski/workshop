@@ -1,5 +1,0 @@
-Jenkins install is from here -  https://betterprogramming.pub/provisioning-a-jenkins-server-on-aws-using-terraform-4cd1351b5d5f
-
-Before running the code, change the ip addrss in secrets.tfvars and generate ssh keys as explained:
-
-ssh-keygen -t rsa -b 4096 -m pem -f tutorial_kp && mv tutorial_kp.pub modules/compute/tutorial_kp.pub && mv tutorial_kp tutorial_kp.pem && chmod 400 tutorial_kp.pem
