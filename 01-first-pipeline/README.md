@@ -3,12 +3,25 @@ For this purposes:
 (From nullsweep)
 https://nullsweep.com/creating-a-secure-pipeline-jenkins-with-sonarqube-and-dependencycheck/
 
-Install Java 11 and Maven globally:
-Via SSH to jenkins instance:
-sudo apt-get install openjdk-11-jdk
-    In the Global Config of Jenkins (http://63.32.31.47:8080/manage/configureTools/) add java 11 - https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz and default Maven
+First we need to connect to jenkins with the initial admin password. If you are using docker container, you need to execute
+docker exec -it unified_pipeline_example_jenkins_1 sh
+and cat /var/jenkins_home/secrets/initialAdminPassword (or to look for your password into the output from docker-compose)
+
+For AWS installation, ssh into your jenkins with the ip from terraform output.
+
+Connect to Jenkins (ip from terraform or 127.0.0.1) at port 8080. Paste the admin password.
+
+You can create a user (mandatory in real word enviroment) and you can install recomended plugins.
+
+We can create our first pipeline, to build our first vulnerable application - webgoat.
+
+Configure global tool configuration to use JDK called JDK11 from  https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz and maven 3.6.1
 
 Enable environmental varialbes and set JAVA_HOME
     Set java home to /var/jenkins_home/tools/hudson.model.JDK/JDK11/jdk-11.0.1/ after you enable enviromental variables (at http://63.32.31.47:8080/manage/configure)
 
-Create multiconfiguration project
+Fork Webgoat or use my fork - https://github.com/SvetlomirBalevski/WebGoat
+
+Create freestyle project to build git@github.com:WebGoat/WebGoat.git (or https://github.com/SvetlomirBalevski/WebGoat)
+
+Build command should be 
