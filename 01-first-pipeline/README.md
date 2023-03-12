@@ -24,4 +24,6 @@ Fork Webgoat or use my fork - https://github.com/SvetlomirBalevski/WebGoat
 
 Create freestyle project to build git@github.com:WebGoat/WebGoat.git (or https://github.com/SvetlomirBalevski/WebGoat)
 
-Build command should be 
+Build step should be Invoke top-level Maven targets and Goals:
+
+clean install -DskipTests
