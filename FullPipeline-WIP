@@ -1,0 +1,35 @@
+pipeline {
+    agent none
+        environment {
+        sonar_key = credentials('sonar-project-key')
+    }
+    stages {
+        stage('Pull from Github') {
+            agent any
+            steps {
+                git url: 'https://github.com/asankov/webgoat.git', branch: 'main'
+            }
+        }
+        stage('SAST'){
+            agent any
+            steps{
+                sh '/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -X -Dsonar.host.url=http://sonarqube:9000 -Dsonar.projectKey=${sonar_key} -Dsonar.projectName=webgoat -Dsonar.language=java -Dsonar.projectVersion=1.0 -Dsonar.java.binaries=**/target/classes -Dsonar.exclusions=**/*.ts -Dsonar.projectBaseDir=/var/jenkins_home/workspace/webgoat-no-tools'
+            }
+        }
+        stage('SCA') {
+            agent any
+            steps{
+            echo('OWASP Dependency Check')
+                dependencyCheck additionalArguments: ''' 
+            -o "./" 
+            -s "./"
+            -f "ALL" 
+            --prettyPrint''', odcInstallation: 'dependency-check'
+         dependencyCheckPublisher (
+            pattern: 'dependency-check-report.xml'
+          )
+            
+            }
+        }
+    }
+}

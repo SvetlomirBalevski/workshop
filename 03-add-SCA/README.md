@@ -7,3 +7,18 @@ Install OWASP Dependency-Check Plugin. Configure installation in Global Tools Co
 Add to the pipeline. It can be done via the console or declarative.
 
 In case you need additional details how to run into scripted pipeline, use this link http://127.0.0.1:8080/pipeline-syntax/ 
+Easiest to do is to use
+
+dependencyCheck additionalArguments: 'scan="path to scan" --format HTML', odcInstallation: 'dependency-check'
+
+Full version together with reports can be done via:
+
+        dependencyCheck additionalArguments: ''' 
+            -o "./" 
+            -s "./"
+            -f "ALL" 
+            --prettyPrint''', odcInstallation: 'dependency-check'
+         dependencyCheckPublisher (
+            pattern: 'dependency-check-report.xml'
+          )
+            
