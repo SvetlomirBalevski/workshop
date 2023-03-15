@@ -7,16 +7,34 @@ For that purpose we can use [Docker Hub](https://hub.docker.com/) or any other f
 Create an account in your registry of choice if you don't have one.
 Once you do that, as a best practice create a Personal Access Token that will be used by Jenkins to push images inside your registry account.
 
-## Create a Jenkins secret
+## Create Jenkins secrets
 
-TODO: how to setup secrets?
+In order for the Jenkins pipeline to be able to push images to the container registry (in this case, Docker Hub) we would need to authenticate with it in some way.
+
+Go to Docker Hub -> Account Settings -> [Security](https://hub.docker.com/settings/security).
+
+Click `New Access Token` and populate the form fields.
+For `Access permission` select `Read, Write, Delete`.
+Click `Generate`.
+Docker Hub will generate a token for you.
+Copy the token.
+
+**NOTE:** Once you close the pop-up you will never see this token again, so make sure you have copied it before you close the pop-up.
+
+In Jenkins, go to `Manage Jenkins` -> `Manage Credentials` -> `System` -> `Global credentials` -> `Add credentials`.
+In the form, select `Secret text` for **Kind**.
+In the `Secret` field paste the token from Docker Hub.
+In the `ID` field write something like `DOCKER_REGISTRY_PASSWORD`.
+
+Finish the process by clicking `Create`.
+
+Voila, we have created a Jenkins secret that holds our container registry access token.
 
 ## Create another Pipeline Stage
 
 Once we have our registry account in place, and have provided Jenkins with the credentials for it, we can write the next stage that will build and push our container image.
 
 Paste the following `stage` snippet after the two stages from the previous section:
-
 
 ```jenkinsfile
 pipeline {
@@ -28,10 +46,14 @@ pipeline {
         stage('Docker Build and Push') {
             agent any
 
+            environment {
+                DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_PASSWORD')
+            }
+
             steps {
-                sh 'docker build -t ${DOCKER_HUB_USERNAME}/webgoat .'
-                sh 'docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}'
-                sh 'docker push ${DOCKER_HUB_USERNAME}/webgoat'
+                sh 'docker build -t <docker_hub_username>/webgoat .'
+                sh 'docker login -u <docker_hub_username> -p ${DOCKER_HUB_PASSWORD}'
+                sh 'docker push <docker_hub_username>/webgoat'
             }
         }
     }
