@@ -8,7 +8,7 @@ Create Jenkins user from administration/security. Logout and login with new user
 
 Instal Sonarqube plugin (https://plugins.jenkins.io/sonar/) in Jenkins from Mange Jenkins / Manage Plugins. After installation (if you select restart, Jenkins needs to  run again from compose) configure on *Global Tool Configuration*. Provide name (sonar) and install latest version.
 
-(edit there is a bug in this installation and need to alter the sonar-scanner code. For this purpose - log into the conatiner, and hardcode JAVA_PATH into the sonar-scanner file located at /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin )
+(edit there is a bug in this installation and need to alter the sonar-scanner code. For this purpose - log into the conatiner, and hardcode JAVA_PATH into the sonar-scanner file located at /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin like this JAVA_HOME="/var/jenkins_home/tools/hudson.model.JDK/JDK11/jdk-11.0.1/")
 
 From manage jenkins / Configure system we need to add Sonarqube installation and add Server token (as secret text, not as username / password) into the credentials. Sonar url is http://sonarqube:9000
 

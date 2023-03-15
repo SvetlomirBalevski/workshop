@@ -44,6 +44,8 @@ services:
     image: sonarqube:7.7-community
     ports:
       - 9000:9000
+    networks:
+    - jenkins
   zap:
     image: owasp/zap2docker-weekly
     ports:
