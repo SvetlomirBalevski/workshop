@@ -55,6 +55,8 @@ services:
     volumes:
       - zap:/zap/data
   # docker-compose information taken from the project at https://github.com/WebGoat/WebGoat
+    networks:
+    - jenkins
   webgoat:
     image: webgoat/webgoat-8.0
     environment:
@@ -65,11 +67,15 @@ services:
       - "9001:9001"
     volumes:
       - webgoat:/home/webgoat/.webgoat
+    networks:
+    - jenkins
   webwolf:
     image: webgoat/webwolf
     ports:
       - "9090:9090"
-    command: --spring.datasource.url=jdbc:hsqldb:hsql://webgoat:9001/webgoat --server.address=0.0.0.0
+    command: --spring.datasource.url=jdbc:hsqldb:hsql://webgoat:9001/webgoat --server.address=0.0.0.0\
+    networks:
+      - jenkins
 
 volumes:
   jenkins_home:
