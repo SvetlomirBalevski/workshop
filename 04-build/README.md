@@ -1,29 +1,16 @@
-# 01. Build
+# 04. Build
 
-The first step in our DevSecOps pipeline is to pull the code for our application and build it.
+After we know that the tests for our application passed, including the SAST and SCA, we can proceed to building and shipping our application.
 
-The application we have chosen for this exercise is the [Java WebGoat app](https://github.com/WebGoat/WebGoat).
-This is an app that is intentionally vulnerable in many ways.
-
-Create a new Jenkins pipeline and give it an arbitrary name (like `devsecops-pipeline`).
-
-In the setup screen, the `Pipeline` section is where we are going to specify the steps of our pipeline.
-The syntax for the pipeline is the so-called [Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/syntax/), which uses the Groovy syntax.
-
-To start our Pipeline paste the following code inside the Pipeline input:
+To do this add the following step to the pipeline:
 
 ```jenkinsfile
 pipeline {
     agent none
 
     stages {
-        stage('Pull from Github') {
-            agent any
+        // stages from the previous sections
 
-            steps {
-                git url: 'https://github.com/asankov/webgoat.git', branch: 'main'
-            }
-        }
         stage('Build') {
             agent {
                 docker {
@@ -41,24 +28,15 @@ pipeline {
 }
 ```
 
-This will create a Pipeline with 2 stages:
-
-- `Pull from Github`
-  - all this stage does is pull the code from Github.
-For that purpose you can use the upstream repo of the WebGoat application, or your own fork.
-- `Build`
-  - this steps builds the application JAR.
+This step will build the application JAR.
 It uses the `maven:3.9.0-eclipse-temurin-17` container image as agent.
 This means that Jenkins will start a new container with that image, mount the local files inside and executed the `steps` inside that container.
 We are using Maven to build our application, hence we need a Maven container.
 The alternative would be to install Maven on the Jenkins host and run the command as a local process.
 
-Save the Pipeline and run it via the `Build Now` button.
-Observe the logs and you will see Jenkins invoking the specified command and the logs from the Maven build.
-
 This pipeline produced the JAR file for our application.
 However, we are still not using this JAR for anything.
 
-The next steps would be to run a SAST solution like SonarQube.
+The next steps would be to put this JAR inside a container.
 
-To do that head to the [next section](../02-add-SAST/README.md).
+To do that head to the [next section](../05-container-build/).
