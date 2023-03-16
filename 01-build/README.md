@@ -1,4 +1,4 @@
-# 0X. Build
+# 01. Build
 
 The first step in our DevSecOps pipeline is to pull the code for our application and build it.
 
@@ -59,6 +59,6 @@ Observe the logs and you will see Jenkins invoking the specified command and the
 This pipeline produced the JAR file for our application.
 However, we are still not using this JAR for anything.
 
-The next steps would be to package this JAR inside a container image.
-Head to the next section for that.
-<!-- TODO: link to next section once we agree on section order -->
+The next steps would be to run a SAST solution like SonarQube.
+
+To do that head to the [next section](../02-add-SAST/README.md).

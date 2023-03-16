@@ -1,4 +1,4 @@
-# 0x. Docker Build
+# 05. Container Build
 
 Now that we are able to build our application, we would want to be able to build a container image that contains our JAR file.
 Once we build our container image we would need to store it into a container repository.
@@ -67,5 +67,4 @@ It tags the image with the right tag and pushes it to the container registry.
 
 In this stage we built our container image and pushed it to a container registry.
 We are almost ready to run our application container.
-But first, we are going to apply some security scanning in the next section.
-<!-- TODO: link to next section once we agree on section order -->
+But first, we are going to apply some security scanning in the [next section](../06-container-image-scan/README.md).

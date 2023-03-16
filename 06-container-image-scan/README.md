@@ -1,4 +1,4 @@
-# 0X. Container Image Scan
+# 06. Container Image Scan
 
 After we have build our container image and pushed it into the container repository we need to scan it for vulnerabilities.
 
@@ -12,8 +12,7 @@ To do this add this stage to your `Jenkinsfile`:
 stage('Docker Scan') {
     agent {
         docker {
-            <!-- TODO: replace hash with proper tag -->
-            image 'asankov/grype@sha256:4e5f08a5bb38a56a692bad56a59369d30adceae2d6db8de1dc6326279d1a8a0c'
+            image 'asankov/grype:0.1
             args '-v /root/.m2:/root/.m2'
         }
     }
@@ -24,7 +23,7 @@ stage('Docker Scan') {
 }
 ```
 
-This will tell Jenkins that the `Docker Scan` phase must be executed inside the `asankov/grype-opa` container.
+This will tell Jenkins that the `Docker Scan` phase must be executed inside the `asankov/grype` container.
 This container contains the grype CLI, which we will use for scanning the container image.
 
 Once we have the CLI the only thing we need to do is invoke it with the container image we want we scan.
