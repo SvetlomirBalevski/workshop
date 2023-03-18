@@ -12,12 +12,11 @@ To do this add this stage to your `Jenkinsfile`:
 stage('Docker Scan') {
     agent {
         docker {
-            image 'asankov/grype-opa:0.1
+            image 'asankov/grype-opa:0.1'
             args '-v /root/.m2:/root/.m2'
         }
     }
     steps {
-        sh 'echo START'
         sh 'grype asankov/webgoat'
     }
 }

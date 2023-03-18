@@ -3,6 +3,7 @@ pipeline {
         environment {
         sonar_key = credentials('sonar-project-key')
     }
+
     stages {
         stage('Pull from Github') {
             agent any
@@ -10,7 +11,7 @@ pipeline {
                 git url: 'https://github.com/asankov/webgoat.git', branch: 'main'
             }
         }
-        stage('SAST'){
+        stage('SAST') {
             agent any
             steps{
                 sh '/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -X -Dsonar.host.url=http://sonarqube:9000 -Dsonar.projectKey=${sonar_key} -Dsonar.projectName=webgoat -Dsonar.language=java -Dsonar.projectVersion=1.0 -Dsonar.java.binaries=**/target/classes -Dsonar.exclusions=**/*.ts -Dsonar.projectBaseDir=/var/jenkins_home/workspace/webgoat-no-tools'
@@ -19,16 +20,54 @@ pipeline {
         stage('SCA') {
             agent any
             steps{
-            echo('OWASP Dependency Check')
                 dependencyCheck additionalArguments: ''' 
             -o "./" 
             -s "./"
             -f "ALL" 
             --prettyPrint''', odcInstallation: 'dependency-check'
-         dependencyCheckPublisher (
-            pattern: 'dependency-check-report.xml'
-          )
-            
+                dependencyCheckPublisher (
+                    pattern: 'dependency-check-report.xml'
+                )
+            }
+        }
+
+        stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.9.0-eclipse-temurin-17'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+
+        stage('Docker Build and Push') {
+            agent any
+
+            environment {
+                DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_PASSWORD')
+            }
+
+            steps {
+                sh 'docker build -t <docker_hub_username>/webgoat .'
+                sh 'docker login -u <docker_hub_username> -p ${DOCKER_HUB_PASSWORD}'
+                sh 'docker push <docker_hub_username>/webgoat'
+            }
+        }
+
+        stage('Docker Scan') {
+            agent {
+                docker {
+                    image 'asankov/grype-opa:0.1'
+                    args '-v /root/.m2:/root/.m2'
+                }
+            }
+
+            steps {
+                sh 'grype asankov/webgoat'
             }
         }
     }
