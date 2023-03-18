@@ -6,7 +6,7 @@ networks:
 services:
   jenkins:
     build:
-      dockerfile: jenkins-dockerfile
+      dockerfile: jenkins.Dockerfile
       context: .
     ports:
       - 8080:8080
