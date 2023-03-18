@@ -3,9 +3,14 @@
 Apart from SAST it is a good idea to use SCA - **Software Composition Analysis**.
 It can be integrated either in SCM, or in CI.
 
-We will show you how to use Snyk into Jenkins.
-
 More information for what is SCA can be found [here (slide 12)](https://docs.google.com/presentation/d/1nGWB1q7tkUvmdDNXC60dL9y9ywFfGHnMqkAJzBAww1M/edit?usp=sharing).
+
+We would show 2 diferent setups. One way is to integrate into your SCM (github).
+
+For this purpose - make account with `Snyk` - at snyk.io. After that, add your Webgoat forked project.
+
+
+## Alternatively, you can add SCA tool to your pipline.
 
 Install **OWASP Dependency-Check Plugin**.
 Configure installation in _Global Tools Configuration_.

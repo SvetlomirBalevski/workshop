@@ -13,8 +13,17 @@ pipeline {
         }
         stage('SAST') {
             agent any
-            steps{
+            steps {
                 sh '/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -X -Dsonar.host.url=http://sonarqube:9000 -Dsonar.projectKey=${sonar_key} -Dsonar.projectName=webgoat -Dsonar.language=java -Dsonar.projectVersion=1.0 -Dsonar.java.binaries=**/target/classes -Dsonar.exclusions=**/*.ts -Dsonar.projectBaseDir=/var/jenkins_home/workspace/webgoat-no-tools'
+                // sh 'export SONAR_TOKEN=${sonar_key}'
+                // sh '/root/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                // -Dsonar.organization=svetlomirbalevski \
+                // -Dsonar.projectKey=SvetlomirBalevski_WebGoat \
+                // -Dsonar.projectKey=${sonar_key} \
+                // -Dsonar.java.binaries=. \
+                // -Dsonar.exclusions=**/*.ts \
+                // -Dsonar.projectBaseDir=/var/jenkins_home/workspace/webgoat -Dsonar.sources=. \
+                // -Dsonar.host.url=https://sonarcloud.io'
             }
         }
         stage('SCA') {
