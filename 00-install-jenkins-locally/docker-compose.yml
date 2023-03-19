@@ -73,7 +73,7 @@ services:
     image: webgoat/webwolf
     ports:
       - "9090:9090"
-    command: --spring.datasource.url=jdbc:hsqldb:hsql://webgoat:9001/webgoat --server.address=0.0.0.0\
+    command: "--spring.datasource.url=jdbc:hsqldb:hsql://webgoat:9001/webgoat --server.address=0.0.0.0"
     networks:
       - jenkins
 
