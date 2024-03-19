@@ -2,11 +2,21 @@
 
 This repo contains the material for the **How to Automate Application Security - the DevSecOps way** workshop.
 
-## Prerequisites
+## What is DevSecOps?
 
-1. Create an AWS account.
-2. Install the [AWS CLI](https://aws.amazon.com/cli/) and [configure it](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) to use your account.
-3. Install the [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli).
+First of all - **a methodology**.
+
+> DevSecOps—short for development, security, and operations—automates the integration of security at every phase of the software development lifecycle, from initial design through integration, testing, deployment, and software delivery.
+
+[**IBM**](https://www.ibm.com/topics/devsecops#:~:text=DevSecOps%E2%80%94short%20for%20development%2C%20security,%2C%20deployment%2C%20and%20software%20delivery.)
+
+> DevSecOps stands for development, security, and operations. It's an approach to culture, automation, and platform design that integrates security as a shared responsibility throughout the entire IT lifecycle.
+
+[**RedHat**](https://www.redhat.com/en/topics/devops/what-is-devsecops)
+
+> DevSecOps (short for development, security, and operations) is a development practice that integrates security initiatives at every stage of the software development lifecycle to deliver robust and secure applications.
+
+[**VMware**](https://www.vmware.com/topics/glossary/content/devsecops.html)
 
 ## Agenda
 
